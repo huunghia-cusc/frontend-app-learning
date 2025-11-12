@@ -28,6 +28,8 @@ import ProctoringInfoPanel from './widgets/ProctoringInfoPanel';
 import AccountActivationAlert from '../../alerts/logistration-alert/AccountActivationAlert';
 import CourseHomeSectionOutlineSlot from '../../plugin-slots/CourseHomeSectionOutlineSlot';
 
+import './Outline-Tab.scss';
+
 const OutlineTab = () => {
   const intl = useIntl();
   const {
@@ -44,29 +46,17 @@ const OutlineTab = () => {
   const expandButtonRef = useRef();
 
   const {
-    courseBlocks: {
-      courses,
-      sections,
-    },
-    courseGoals: {
-      selectedGoal,
-      weeklyLearningGoalEnabled,
-    } = {},
-    datesWidget: {
-      courseDateBlocks,
-    },
+    courseBlocks: { courses, sections },
+    courseGoals: { selectedGoal, weeklyLearningGoalEnabled } = {},
+    datesWidget: { courseDateBlocks },
     enableProctoredExams,
   } = useModel('outline', courseId);
 
   const [expandAll, setExpandAll] = useState(false);
   const navigate = useNavigate();
 
-  const eventProperties = {
-    org_key: org,
-    courserun_key: courseId,
-  };
+  const eventProperties = { org_key: org, courserun_key: courseId };
 
-  // Below the course title alerts (appearing in the order listed here)
   const courseStartAlert = useCourseStartAlert(courseId);
   const courseEndAlert = useCourseEndAlert(courseId);
   const certificateAvailableAlert = useCertificateAvailableAlert(courseId);
@@ -74,7 +64,6 @@ const OutlineTab = () => {
   const scheduledContentAlert = useScheduledContentAlert(courseId);
 
   const rootCourseId = courses && Object.keys(courses)[0];
-
   const hasDeadlines = courseDateBlocks && courseDateBlocks.some(x => x.dateType === 'assignment-due-date');
 
   const logUpgradeToShiftDatesLinkClick = () => {
@@ -90,23 +79,17 @@ const OutlineTab = () => {
   const isEnterpriseUser = () => {
     const authenticatedUser = getAuthenticatedUser();
     const userRoleNames = authenticatedUser ? authenticatedUser.roles.map(role => role.split(':')[0]) : [];
-
     return userRoleNames.includes('enterprise_learner');
   };
 
-  /** show post enrolment survey to only B2C learners */
   const learnerType = isEnterpriseUser() ? 'enterprise_learner' : 'b2c_learner';
 
   const location = useLocation();
-
   useEffect(() => {
     const currentParams = new URLSearchParams(location.search);
     const startCourse = currentParams.get('start_course');
     if (startCourse === '1') {
       sendTrackEvent('enrollment.email.clicked.startcourse', {});
-
-      // Deleting the course_start query param as it only needs to be set once
-      // whenever passed in query params.
       currentParams.delete('start_course');
       navigate({
         pathname: location.pathname,
@@ -114,25 +97,29 @@ const OutlineTab = () => {
         replace: true,
       });
     }
-  }, [location.search]);
+  }, [location.search, navigate]);
 
   return (
     <>
-      <div data-learner-type={learnerType} className="row w-100 mx-0 my-3 justify-content-between">
-        <div className="col-12 col-sm-auto p-0">
-          <div role="heading" aria-level="1" className="h2">{title}</div>
+      {/* HERO gradient */}
+      <div className="figma-hero" data-learner-type={learnerType}>
+        <div className="figma-hero__badge" />
+        <div>
+          <div className="figma-hero__title">{title}</div>
+          {org ? <div className="figma-hero__org">{org}</div> : null}
         </div>
       </div>
+
       <div className="row course-outline-tab">
         <AccountActivationAlert />
         <div className="col-12">
           <AlertList
             topic="outline-private-alerts"
-            customAlerts={{
-              ...privateCourseAlert,
-            }}
+            customAlerts={{ ...privateCourseAlert }}
           />
         </div>
+
+        {/* ===== CỘT TRÁI ===== */}
         <div className="col col-12 col-md-8">
           <AlertList
             topic="outline-course-alerts"
@@ -144,23 +131,34 @@ const OutlineTab = () => {
               ...scheduledContentAlert,
             }}
           />
+
           {isSelfPaced && hasDeadlines && (
             <>
               <ShiftDatesAlert model="outline" fetch={fetchOutlineTab} />
               <UpgradeToShiftDatesAlert model="outline" logUpgradeLinkClick={logUpgradeToShiftDatesLinkClick} />
             </>
           )}
-          <StartOrResumeCourseCard />
+
+          <div className="figma-card figma-card--cta">
+            <StartOrResumeCourseCard />
+          </div>
           <WelcomeMessage courseId={courseId} nextElementRef={expandButtonRef} />
+
           {rootCourseId && (
             <>
               <div id="expand-button-row" className="row w-100 m-0 mb-3 justify-content-end">
                 <div className="col-12 col-md-auto p-0">
-                  <Button ref={expandButtonRef} variant="outline-primary" block onClick={() => { setExpandAll(!expandAll); }}>
+                  <Button
+                    ref={expandButtonRef}
+                    variant="outline-primary"
+                    block
+                    onClick={() => { setExpandAll(!expandAll); }}
+                  >
                     {expandAll ? intl.formatMessage(messages.collapseAll) : intl.formatMessage(messages.expandAll)}
                   </Button>
                 </div>
               </div>
+
               <CourseHomeSectionOutlineSlot
                 expandAll={expandAll}
                 sectionIds={courses[rootCourseId].sectionIds}
@@ -169,21 +167,47 @@ const OutlineTab = () => {
             </>
           )}
         </div>
+
+        {/* ===== CỘT PHẢI: 3 Ô CARD ===== */}
         {rootCourseId && (
-          <div className="col col-12 col-md-4">
-            <ProctoringInfoPanel />
-            { /** Defer showing the goal widget until the ProctoringInfoPanel has resolved or has been determined as
-             disabled to avoid components bouncing around too much as screen is rendered */ }
-            {(!enableProctoredExams || proctoringPanelStatus === 'loaded') && weeklyLearningGoalEnabled && (
-              <WeeklyLearningGoalCard
-                daysPerWeek={selectedGoal && 'daysPerWeek' in selectedGoal ? selectedGoal.daysPerWeek : null}
-                subscribedToReminders={selectedGoal && 'subscribedToReminders' in selectedGoal ? selectedGoal.subscribedToReminders : false}
-              />
+          <div className="col col-12 col-md-4 figma-aside">
+            {/* (tuỳ chọn) proctoring / goal cho vào card riêng để không phá layout */}
+            {enableProctoredExams && (
+              <div className="figma-card">
+                <ProctoringInfoPanel />
+              </div>
             )}
-            <CourseTools />
-            <CourseOutlineTabNotificationsSlot courseId={courseId} />
-            <CourseDates />
-            <CourseHandouts />
+
+            {(!enableProctoredExams || proctoringPanelStatus === 'loaded') && weeklyLearningGoalEnabled && (
+              <div className="figma-card">
+                <WeeklyLearningGoalCard
+                  daysPerWeek={selectedGoal && 'daysPerWeek' in selectedGoal ? selectedGoal.daysPerWeek : null}
+                  subscribedToReminders={selectedGoal && 'subscribedToReminders' in selectedGoal ? selectedGoal.subscribedToReminders : false}
+                />
+              </div>
+            )}
+
+            {/* 1) Course Tools */}
+            <div className="figma-card">
+              <h3 className="figma-card__title">Course Tools</h3>
+              <CourseTools />
+              <CourseOutlineTabNotificationsSlot courseId={courseId} />
+            </div>
+
+            {/* 2) Important dates */}
+            <div className="figma-card figma-card--highlight">
+              <h3 className="figma-card__title">Important dates</h3>
+              <CourseDates />
+            </div>
+
+            {/* 3) Course Handouts */}
+            <div className="figma-card">
+              <h3 className="figma-card__title">Course Handouts</h3>
+              <p className="figma-muted">
+                Download lecture notes, assignments, and additional resources to support your learning journey.
+              </p>
+              <CourseHandouts />
+            </div>
           </div>
         )}
       </div>

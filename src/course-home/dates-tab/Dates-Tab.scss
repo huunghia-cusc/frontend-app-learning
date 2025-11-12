@@ -1,0 +1,70 @@
+/* ===== Card nhẹ như Figma ===== */
+.figma-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #eef2f7;    /* viền rất nhạt */
+  box-shadow: 0 1px 1px rgba(16,24,40,.02);
+  padding: 20px 22px;
+}
+
+/* ===== Bố cục danh sách ===== */
+.dates-card { padding: 24px; }   /* nới nhẹ padding để thoáng như mock */
+.dates-list { list-style: none; margin: 0; padding: 0; }
+
+.dates-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 0;               /* gọn hơn một chút */
+}
+
+/* Đường kẻ chỉ nằm trong phần chữ (không đi dưới chấm) */
+.dates-item + .dates-item .item-body {
+  border-top: 1px solid #eef2f7;
+  padding-top: 16px;
+}
+
+/* ===== Dots bên trái ===== */
+.dot {
+  width: 12px; height: 12px;                 /* hơi lớn hơn để rõ như mock */
+  border-radius: 999px;
+  background: #0f172a;                       /* dot thường: xanh đen đậm */
+  margin-top: 6px; flex: 0 0 12px;
+}
+
+/* TODAY: lõi vàng + vòng vàng nhạt (đúng mock) */
+.dot--today {
+  background: #f59e0b;                       /* lõi vàng đậm */
+  box-shadow: 0 0 0 6px #fef3c7;             /* vòng vàng nhạt, dày hơn */
+}
+
+/* ===== Text & hàng đầu ===== */
+.item-body { flex: 1 1 auto; min-width: 0; }
+.item-row  { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+.item-date  { font-weight: 700; color: #0f172a; font-size: 16px; letter-spacing: .2px; }
+.item-title { margin-top: 6px; font-weight: 600; color: #0f172a; }
+.item-sub   { margin-top: 2px; color: #6b7280; }
+
+/* ===== Pill TODAY ===== */
+.pill-today {
+  display: inline-block;
+  background: #f59e0b;
+  color: #111827;
+  border-radius: 999px;                      /* tròn hẳn */
+  padding: 2px 12px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: .2px;
+  text-transform: uppercase;
+}
+
+/* Gọn khoảng trắng đầu/đuôi trong card */
+.dates-card > :first-child { margin-top: 0; }
+.dates-card > :last-child  { margin-bottom: 0; }
+
+/* Ẩn timeline cũ nếu còn */
+.dates-tab .timeline,
+.dates-tab .vertical-line { display: none !important; }
+
