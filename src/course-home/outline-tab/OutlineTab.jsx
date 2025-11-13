@@ -101,7 +101,6 @@ const OutlineTab = () => {
 
   return (
     <>
-      {/* HERO gradient */}
       <div className="figma-hero" data-learner-type={learnerType}>
         <div className="figma-hero__badge" />
         <div>
@@ -119,7 +118,6 @@ const OutlineTab = () => {
           />
         </div>
 
-        {/* ===== CỘT TRÁI ===== */}
         <div className="col col-12 col-md-8">
           <AlertList
             topic="outline-course-alerts"
@@ -168,10 +166,8 @@ const OutlineTab = () => {
           )}
         </div>
 
-        {/* ===== CỘT PHẢI: 3 Ô CARD ===== */}
         {rootCourseId && (
           <div className="col col-12 col-md-4 figma-aside">
-            {/* (tuỳ chọn) proctoring / goal cho vào card riêng để không phá layout */}
             {enableProctoredExams && (
               <div className="figma-card">
                 <ProctoringInfoPanel />
@@ -187,20 +183,17 @@ const OutlineTab = () => {
               </div>
             )}
 
-            {/* 1) Course Tools */}
             <div className="figma-card">
               <h3 className="figma-card__title">Course Tools</h3>
               <CourseTools />
               <CourseOutlineTabNotificationsSlot courseId={courseId} />
             </div>
 
-            {/* 2) Important dates */}
             <div className="figma-card figma-card--highlight">
               <h3 className="figma-card__title">Important dates</h3>
               <CourseDates />
             </div>
 
-            {/* 3) Course Handouts */}
             <div className="figma-card">
               <h3 className="figma-card__title">Course Handouts</h3>
               <p className="figma-muted">

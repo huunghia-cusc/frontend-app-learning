@@ -1,6 +1,5 @@
 .figma-home { --r:16px; --shadow:0 10px 24px rgba(18,38,63,.08); }
 
-/* HERO gradient */
 .figma-hero{
   margin:16px 0 20px; padding:20px 24px; border-radius:20px;
   background:linear-gradient(90deg,#1678F3 0%,#10B981 100%); color:#fff;
@@ -10,11 +9,9 @@
 .figma-hero__title{margin:0;font-weight:700;font-size:24px;}
 .figma-hero__org{margin:2px 0 0;opacity:.9;}
 
-/* Lưới 2 cột giống Figma */
 .figma-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:20px;margin-top:16px;}
 .figma-col-main,.figma-col-aside{display:grid;gap:16px;}
 
-/* Card chung */
 .figma-card{
   background:#fff;border-radius:var(--r);border:1px solid rgba(2,32,71,.08);
   box-shadow:var(--shadow);padding:16px 18px;
@@ -26,7 +23,6 @@
 .figma-muted{color:#6b7280;font-size:14px;line-height:1.45;}
 .figma-link{font-weight:600;}
 
-/* Nút CTA Start/Resume: gradient xanh như Figma */
 .figma-card--cta :is(a.btn.btn-primary,
                      button.btn.btn-primary,
                      .pgn__button.btn-primary) {
@@ -62,7 +58,6 @@
 
 .figma-col-aside { display: grid; gap: 16px; }
 
-/* Ô xanh nhạt cho Important dates */
 .figma-dates-chip {
   margin-top: 8px;
   padding: 12px 16px;
@@ -71,10 +66,8 @@
   border: 1px solid #b3efd7;
 }
 
-/* khoảng cách giữa các card ở cột phải */
 .figma-aside { display: grid; gap: 16px; }
 
-/* card chuẩn: bo góc + bóng + ẩn tràn để bo góc hiển thị rõ */
 .figma-card {
   background: #fff;
   border-radius: 16px;
@@ -84,7 +77,6 @@
   overflow: hidden;
 }
 
-/* ô xanh nhạt nằm BÊN TRONG card Important dates */
 .figma-chip {
   background: #e9fbf3;
   border: 1px solid #b3efd7;
@@ -92,17 +84,14 @@
   padding: 12px 16px;
 }
 
-/* gọn khoảng trắng trong card */
 .figma-card > :first-child { margin-top: 0; }
 .figma-card > :last-child  { margin-bottom: 0; }
 
-/* === Force gradient cho nút Start/Resume trong thẻ CTA === */
 .figma-card--cta :is(a,button)[class*="btn-brand"],
 .figma-card--cta :is(a,button)[class*="btn-primary"],
 .figma-card--cta .pgn__button--brand,
 .figma-card--cta .pgn__button.btn-brand {
   background: linear-gradient(90deg,#1678F3 0%, #10B981 100%) !important;
-  /* fallback nếu trình duyệt bỏ background-image */
   background-color: #1678F3 !important;
   border-color: transparent !important;
   color: #fff !important;
@@ -124,25 +113,19 @@
   box-shadow: 0 4px 12px rgba(22,120,243,.25);
 }
 
-/* ===== Spacing giữa CTA "Pick up..." và khối Alert/Thông tin ===== */
-
-/* Tạo khoảng cách dưới cho card CTA */
 .course-outline-tab .figma-card--cta {
   margin-bottom: 24px !important;
 }
 
-/* Nếu ngay sau CTA là container welcome alert thì đẩy xuống thêm */
 .course-outline-tab .figma-card--cta + [data-testid="alert-container-welcome"] {
   margin-top: 16px !important;
 }
 
-/* Phòng trường hợp markup thay đổi: mọi Alert trong cột trái đều có top margin nhẹ */
 .course-outline-tab .col-12.col-md-8 .alert-content,
 .course-outline-tab .col-12.col-md-8 .alert {
   margin-top: 16px;
 }
 
-/* Bo góc nhẹ cho Alert để đồng bộ với card */
 .course-outline-tab .col-12.col-md-8 .alert,
 .course-outline-tab .col-12.col-md-8 .alert-content {
   border-radius: 12px;
