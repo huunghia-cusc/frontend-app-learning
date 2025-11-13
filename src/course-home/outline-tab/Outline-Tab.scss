@@ -123,3 +123,27 @@
   transform: translateY(1px);
   box-shadow: 0 4px 12px rgba(22,120,243,.25);
 }
+
+/* ===== Spacing giữa CTA "Pick up..." và khối Alert/Thông tin ===== */
+
+/* Tạo khoảng cách dưới cho card CTA */
+.course-outline-tab .figma-card--cta {
+  margin-bottom: 24px !important;
+}
+
+/* Nếu ngay sau CTA là container welcome alert thì đẩy xuống thêm */
+.course-outline-tab .figma-card--cta + [data-testid="alert-container-welcome"] {
+  margin-top: 16px !important;
+}
+
+/* Phòng trường hợp markup thay đổi: mọi Alert trong cột trái đều có top margin nhẹ */
+.course-outline-tab .col-12.col-md-8 .alert-content,
+.course-outline-tab .col-12.col-md-8 .alert {
+  margin-top: 16px;
+}
+
+/* Bo góc nhẹ cho Alert để đồng bộ với card */
+.course-outline-tab .col-12.col-md-8 .alert,
+.course-outline-tab .col-12.col-md-8 .alert-content {
+  border-radius: 12px;
+}
