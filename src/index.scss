@@ -50,7 +50,6 @@
     border-top: 4px solid transparent;
     color: var(--pgn-color-gray-700);
 
-    // temporary until we can remove .btn class from dropdowns
     border-left: 0;
     border-right: 0;
     border-radius: 0;
@@ -168,8 +167,6 @@
     flex-shrink: 1;
     flex-basis: 100%;
     display: flex;
-    // min-width 0 prevents the flex item from overflowing the parent container
-    // https://dev.to/martyhimmel/quick-tip-to-stop-flexbox-from-overflowing-peb
     min-width: 0;
   }
 
@@ -239,7 +236,6 @@
 
     .dropdown-item {
       &.active {
-        // This is un-doing the default react-bootstrap styling for active dropdown-item elements.
         background-color: transparent;
       }
     }
@@ -307,12 +303,6 @@
 .unit-iframe-wrapper {
   margin-top: 0;
 
-  // Some XBlocks (such as xblock-drag-and-drop-v2) rely on the viewport width
-  // to determine their layout on mobile. This is problematic because the
-  // viewport width may not be the same as the width of the iframe. To fix this,
-  // here we compensate for the padding of the parent div with "container-xl"
-  // class to ensure that the viewport width is the same as the width of the
-  // iframe.
   margin-left: calc(var(--pgn-spacing-grid-gutter-width) * -0.5);
   margin-right: calc(var(--pgn-spacing-grid-gutter-width) * -0.5);
 
@@ -363,22 +353,14 @@
   }
 }
 
-// This class forces any modals using 'modal-lti' as their dialogClassName to take up the whole
-// window (retaining padding around the edge).  Bootstrap modals don't have a full-screen
-// size like this.  Because of the hack below around react-focus-on's div, it would be better long-term to pull this into Paragon and perhaps call it "modal-full" or something like that.
 .modal-lti {
   height: 100%;
   max-width: 100% !important;
 
-  // I don't like this.  We need to set a height of 100% on a div created by react-focus-on, a
-  // package we use in our Modal.  That div has no class name or ID, so instead we're uniquely
-  // identifying it by based on a unique attribute it has which its siblings don't share.
   > div[data-focus-lock-disabled="false"] {
     height: 100%;
   }
 
-  // Along with setting the height of modal-content's parent div from react-focus-on, we need to
-  // set modal-content's height as well to get the modal to expand to full-screen height.
   .modal-content {
     height: 100%;
   }
@@ -448,9 +430,6 @@
   }
 }
 
-/* ====== START: custom overrides (paste AFTER all imports) ====== */
-
-/* Card Paragon (mọi nơi) */
 #root .pgn__card {
   border: 0 !important;
   border-radius: 14px !important;
@@ -461,7 +440,6 @@
 #root .pgn__card-header { padding-block: 16px !important; }
 #root .pgn__card-header-title { letter-spacing: -0.01em; }
 
-/* Tabs: Course / Progress / Dates – underline animate */
 #root .nav-underline-tabs .nav-link {
   position: relative;
   border: 0 !important;
@@ -479,7 +457,6 @@
 #root .nav-underline-tabs .nav-link:hover::after,
 #root .nav-underline-tabs .nav-link.active::after { width: 100%; }
 
-/* Courseware header (dải tab đơn vị) sticky + glass */
 #root .sequence-navigation-container {
   position: sticky !important;
   top: 0; z-index: 4;
@@ -488,7 +465,6 @@
   border-bottom: 1px solid var(--pgn-color-light-400);
 }
 
-/* Dải tab đơn vị – pill nhẹ, hover rõ */
 #root .sequence-navigation .btn {
   border-color: var(--pgn-color-light-300) !important;
   transition: background .12s ease, color .12s ease, box-shadow .12s ease;
@@ -501,7 +477,7 @@
   background: var(--pgn-color-light-200);
   color: var(--pgn-color-gray-800);
 }
-/* bỏ gạch chân mặc định khi active (đã có nền) */
+
 #root .sequence-navigation .btn.active::after { content: none !important; }
 #root .sequence-navigation .btn.active {
   color: var(--pgn-color-primary-600);
@@ -509,7 +485,6 @@
   box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
 
-/* Mũi tên góc phải trên – tròn + bóng nhẹ */
 #root .top-unit-navigation .next-button,
 #root .top-unit-navigation .previous-button,
 #root .top-unit-navigation [class*="next-"],
@@ -531,7 +506,6 @@
   background: var(--pgn-color-light-200) !important;
 }
 
-/* Nút Prev/Next ở CUỐI unit – pill + bóng */
 #root .unit-navigation .previous-button,
 #root .unit-navigation .next-button {
   border-radius: 10px !important;
@@ -540,23 +514,18 @@
   box-shadow: 0 4px 12px rgba(0,0,0,.06);
 }
 
-/* Tiêu đề unit */
 #root .unit-container h1 {
   font-weight: 700 !important;
   letter-spacing: -0.02em;
   font-size: clamp(1.25rem, 1.05rem + 0.9vw, 1.75rem);
 }
 
-/* Hover item trong Course Outline Tray (bên trái) */
 #root .course-outline-tray .pgn__list-group-item { border-radius: 10px; }
 #root .course-outline-tray .pgn__list-group-item:hover { background: var(--pgn-color-light-200); }
 
-/* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
-/* ====== END: custom overrides ====== */
 
-// Import component-specific sass files
 @import "courseware/course/celebration/CelebrationModal.scss";
 @import "courseware/course/sidebar/sidebars/discussions/Discussions.scss";
 @import "courseware/course/sidebar/sidebars/notifications/NotificationIcon.scss";

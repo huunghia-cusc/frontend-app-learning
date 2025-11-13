@@ -1,20 +1,17 @@
-/* ======== Dates timeline – premium look (aligned) ======== */
 $dot-radius: .32rem;
 $dot-size: $dot-radius * 2.1;
-$offset: $dot-radius * 1.6;   /* tâm timeline */
-$line-w: 2px;                 /* bề rộng đường timeline */
+$offset: $dot-radius * 1.6;
+$line-w: 2px;
 
-/* Tokens (auto hòa nhập với Paragon) */
 :root {
   --tl-track: var(--pgn-color-light-400, #e6eaef);
   --tl-track-muted: var(--pgn-color-light-300, #eef2f6);
   --tl-progress: var(--pgn-color-primary-500, #0f5b8d);
   --tl-dot: var(--pgn-color-gray-900, #0f172a);
-  --tl-today: #ffdb87;               /* nền “Today” */
-  --tl-glow: rgba(15, 91, 141, .25); /* quầng sáng */
+  --tl-today: #ffdb87;
+  --tl-glow: rgba(15, 91, 141, .25);
 }
 
-/* Dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
     --tl-track: #2a3641;
@@ -30,20 +27,18 @@ $line-w: 2px;                 /* bề rộng đường timeline */
   padding-left: clamp(.75rem, 2vw, 1rem);
 }
 
-/* đường từ trên xuống dot (đã hoàn thành) */
 .dates-line-top {
   display: inline-block;
   position: absolute;
   top: 0;
   height: $offset;
-  left: calc(#{$offset} - #{$line-w} / 2);   /* canh giữa theo tâm */
+  left: calc(#{$offset} - #{$line-w} / 2);
   width: $line-w;
   background: var(--tl-progress);
   border-radius: 2px;
   z-index: 0;
 }
 
-/* dot ở mốc */
 .dates-dot {
   display: inline-block;
   position: absolute;
@@ -51,15 +46,14 @@ $line-w: 2px;                 /* bề rộng đường timeline */
   height: $dot-size;
   width:  $dot-size;
   border-radius: 50%;
-  left: calc(#{$offset} - #{$dot-size} / 2); /* tâm dot = $offset */
+  left: calc(#{$offset} - #{$dot-size} / 2);
   background: var(--tl-dot);
   box-shadow:
-    0 0 0 2px #fff,                    /* viền tách khỏi nền */
-    0 0 0 0 var(--tl-glow);            /* quầng – animate nhẹ */
+    0 0 0 2px #fff,
+    0 0 0 0 var(--tl-glow);
   z-index: 1;
   transition: transform .18s ease, box-shadow .18s ease;
 
-  /* chấm “Today” – lớn hơn + glow, vẫn giữ tâm */
   &.dates-bg-today {
     top: calc(#{$offset} - #{$dot-radius});
     height: $dot-size * 1.5;
@@ -72,23 +66,20 @@ $line-w: 2px;                 /* bề rộng đường timeline */
   }
 }
 
-/* đường từ dot đi xuống dưới (chưa xảy ra) */
 .dates-line-bottom {
   display: inline-block;
   position: absolute;
   top: $offset + $dot-size;
   bottom: 0;
-  left: calc(#{$offset} - #{$line-w} / 2);   /* canh giữa theo tâm */
+  left: calc(#{$offset} - #{$line-w} / 2);
   width: $line-w;
   background: var(--tl-track-muted);
   border-radius: 2px;
   z-index: 0;
 }
 
-/* fallback màu Today nếu bị dùng ở nơi khác */
 .dates-bg-today { background: var(--tl-today); }
 
-/* ===== Optional states (nếu container có gán class) ===== */
 .dates-day.is-past {
   .dates-line-top, .dates-line-bottom { background: var(--tl-progress); }
   .dates-dot { background: var(--tl-progress); }
@@ -108,7 +99,6 @@ $line-w: 2px;                 /* bề rộng đường timeline */
   }
 }
 
-/* Interaction tinh tế */
 .dates-day:hover .dates-dot:not(.dates-bg-today),
 .dates-day:focus-within .dates-dot:not(.dates-bg-today) {
   transform: translateY(-1px) scale(1.06);
@@ -117,7 +107,6 @@ $line-w: 2px;                 /* bề rộng đường timeline */
     0 6px 18px -6px var(--tl-glow);
 }
 
-/* A11y */
 .dates-day:focus-within .dates-dot {
   outline: none;
   box-shadow:
@@ -125,7 +114,6 @@ $line-w: 2px;                 /* bề rộng đường timeline */
     0 0 0 6px var(--tl-glow);
 }
 
-/* Giảm chuyển động */
 @media (prefers-reduced-motion: reduce) {
   .dates-dot { transition: none; }
 }

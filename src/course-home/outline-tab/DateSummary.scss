@@ -1,15 +1,15 @@
 .date-summary {
   display: flex;
   align-items: center;
-  gap: 0.25rem; /* tạo khoảng cách thay vì dùng margin rời rạc */
-  flex-wrap: wrap; /* nếu màn hình hẹp thì xuống dòng gọn hơn */
+  gap: 0.25rem;
+  flex-wrap: wrap;
 }
 
 .date-summary-text {
-  flex: 1 1 auto;     /* cho phép chiếm phần còn lại */
-  min-width: 0;       /* tránh bị overflow trong flex */
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .description-link {
-  white-space: nowrap; /* để link không tách từ kỳ cục */
+  white-space: nowrap;
 }
